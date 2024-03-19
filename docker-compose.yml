@@ -1,0 +1,44 @@
+version: '3.9'
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
+  pixelservice:
+    image: pixelservice
+    build:
+      context: ./PixelService
+      dockerfile: Dockerfile
+    container_name: pixel-service
+    ports:
+      - "8080:80"
+    depends_on:
+      - redis
+    environment:
+      - RedisOptions__ConnectionString=redis:6379
+    networks:
+      - backend
+
+  storageservice:
+    image: storageservice
+    build:
+      context: ./StorageService
+      dockerfile: Dockerfile
+    container_name: storage-service
+    ports:
+      - "8081:80"
+    depends_on:
+      - redis
+    environment:
+      - RedisOptions__ConnectionString=redis:6379
+    networks:
+      - backend
