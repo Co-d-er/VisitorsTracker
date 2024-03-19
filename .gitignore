@@ -1,0 +1,21 @@
+# .NET Core
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.json
+*.xml
+*.csproj.user
+*.obj
+*.jfm
+*.user
+*.suo
+*.cache
+*.vspscc
+*.bin
+*.lock.json
+/build/
+.nuget/
+/packages/
+/bin/
+/obj/
